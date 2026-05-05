@@ -70,7 +70,7 @@ vst_counts  <- assay(vst(dds, blind = FALSE))
 write.csv(as.data.frame(vst_counts),
           file.path(opt$outdir, "vst_counts.csv"))
 
-# --- PCA ---
+# pca 
 
 pca_data <- plotPCA(vst(dds, blind = FALSE),
                     intgroup = c("diversity", "temperature"),
