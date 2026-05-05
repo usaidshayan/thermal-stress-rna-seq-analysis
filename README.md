@@ -119,8 +119,3 @@ DESeq2 model: `~ line + temperature + diversity:temperature`
 - `HD_vs_LD_cold` — diversity × cold stress interaction
 - `HD_vs_LD_heat` — diversity × heat stress interaction
 
----
-
-## Citation / Methods reference
-
-See the methods section document (`RNA_seq_Methods_v3_Revised.docx`) for full experimental details, QC thresholds (RIN ≥ 7), and statistical rationale.
