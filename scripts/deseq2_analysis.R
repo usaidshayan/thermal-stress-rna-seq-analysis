@@ -34,7 +34,7 @@ rownames(count_matrix) <- raw_counts$Geneid
 # column names come out as full BAM paths, strip them back to sample IDs
 colnames(count_matrix) <- gsub(".*/|.sorted.bam", "", colnames(count_matrix))
 
-meta <- read.csv(opt$sample_sheet, stringsAsFactors = FALSE)
+meta <- read.csv(opt$sample_sheet, stringsAsFactors = FALSE) #feeding the sample sheet 
 meta <- meta[match(colnames(count_matrix), meta$sample_id), ]
 stopifnot(all(meta$sample_id == colnames(count_matrix)))  # paranoia check - order must match
 
