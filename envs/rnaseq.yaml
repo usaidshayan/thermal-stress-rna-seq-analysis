@@ -1,0 +1,29 @@
+name: rnaseq_env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.11
+  - snakemake>=7.32
+  - snakemake-executor-plugin-slurm
+  - pandas>=1.5
+  - fastqc=0.11.9
+  - trimmomatic=0.39
+  - hisat2=2.2.1
+  - samtools=1.17
+  - subread=2.0.3       # featureCounts
+  - multiqc=1.14
+  - r-base=4.3.1
+  - bioconductor-deseq2=1.40
+  - bioconductor-topgo=2.52
+  - r-wgcna=1.72
+  - bioconductor-biocparallel=1.34
+  - r-ggplot2=3.4
+  - r-pheatmap=1.0
+  - r-rcolorbrewer=1.1
+  - r-optparse=1.7
+  - r-tibble=3.2
+  - r-dplyr=1.1
+  - r-ggrepel=0.9
+  - r-viridis=0.6

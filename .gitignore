@@ -1,0 +1,40 @@
+# Claude Code internal settings
+.claude/
+
+# Raw sequencing data — too large for git
+data/raw/
+
+# Pipeline outputs — reproducible from raw data
+results/
+
+# HISAT2 genome index
+resources/hisat2_index/
+
+# Logs
+logs/
+
+# Snakemake internals
+.snakemake/
+
+# R temporaries
+*.Rhistory
+*.RData
+*.Rout
+
+# macOS artefacts
+.DS_Store
+__MACOSX/
+
+# Conda environment (built from envs/rnaseq.yaml)
+envs/rnaseq/
+
+# Large reference files — document location in README instead
+resources/genome/*.fna
+resources/genome/*.fa
+resources/genome/*.gtf
+resources/genome/*.gff
+
+# Editor temporaries
+*.swp
+*.swo
+*~

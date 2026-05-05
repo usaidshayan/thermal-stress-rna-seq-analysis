@@ -1,0 +1,45 @@
+# =============================================================================
+# Snakemake SLURM profile for NeSI / REANNZ
+# Place at: profiles/nesi/config.yaml
+#
+# Requires: snakemake-executor-plugin-slurm
+#   pip install snakemake-executor-plugin-slurm
+#
+# Usage: snakemake --profile profiles/nesi --configfile config/config.yaml
+# =============================================================================
+
+executor: slurm
+
+# Default SLURM resources (overridden per-rule in rule resources: blocks)
+default-resources:
+  slurm_account: "YOUR_PROJECT_CODE"    # <-- replace with your NeSI project code
+  slurm_partition: "large"
+  runtime: 60                            # minutes
+  mem_mb: 8000
+  cpus_per_task: 2
+
+# Requeue failed jobs once (handles transient node failures on NeSI)
+retries: 1
+
+# Number of simultaneous SLURM jobs
+jobs: 50
+
+# Wait up to 60 s for output files to appear (NeSI Lustre latency)
+latency-wait: 60
+
+# Keep going if a rule fails (so other branches of the DAG complete)
+keep-going: true
+
+# Rerun incomplete jobs from previous interrupted runs
+rerun-incomplete: true
+
+# Print shell commands for reproducibility
+printshellcmds: true
+
+# Conda/module environment
+use-conda: false   # set true if using conda envs instead of module load
+
+# Group small rules into single jobs to reduce scheduler overhead
+group-components:
+  fastqc_raw: 4
+  fastqc_trimmed: 4

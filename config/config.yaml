@@ -1,0 +1,55 @@
+# =============================================================================
+# RNA-seq Pipeline Configuration
+# Lucilia sericata L4 thermal stress experiment
+# =============================================================================
+
+# --- Sample metadata ---
+sample_sheet: "data/sample_sheet.csv"
+
+# --- Reference genome (L. sericata) ---
+# Download from NCBI or provide local path before running
+genome_fasta: "resources/genome/Lucilia_sericata.fna"
+genome_gtf:   "resources/genome/Lucilia_sericata.gtf"
+hisat2_index: "resources/hisat2_index/Lsericata"
+
+# --- Adapter sequences (Illumina TruSeq PE) ---
+adapters: "resources/adapters/TruSeq3-PE-2.fa"
+
+# --- Trimmomatic parameters ---
+trimmomatic:
+  leading:       3
+  trailing:      3
+  slidingwindow: "4:15"
+  minlen:        36
+
+# --- HISAT2 alignment ---
+hisat2:
+  # RF = reverse-stranded (dUTP method, poly-A selected strand-specific libraries)
+  strandness: "RF"
+  extra:       "--dta --no-spliced-alignment-overlap"
+
+# --- featureCounts ---
+featurecounts:
+  # -s 2  reverse stranded
+  # -p    paired-end
+  # -B    require both ends mapped
+  # -C    exclude chimeric fragments
+  extra: "-s 2 -p -B -C -T 8"
+
+# --- Sequencing parameters ---
+read_length: 150    # bp, paired-end
+min_depth:   20000000  # 20M PE reads target per sample
+
+# --- DESeq2 ---
+deseq2:
+  fdr_threshold: 0.05
+  lfc_threshold: 1.0   # |log2FC| threshold for volcano/MA plots
+
+# --- WGCNA ---
+wgcna:
+  soft_power:       "auto"  # set to integer to override automatic selection
+  min_module_size:  30
+  merge_cut_height: 0.25
+
+# --- NeSI account (replace with your project code) ---
+nesi_account: "YOUR_PROJECT_CODE"

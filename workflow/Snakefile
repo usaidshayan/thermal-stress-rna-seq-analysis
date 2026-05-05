@@ -1,0 +1,70 @@
+# Snakemake pipeline for L. sericata thermal stress RNA-seq
+# runs on NeSI - see submit_pipeline.sl to actually kick this off
+#
+# dry run first to check everything looks right:
+#   snakemake -n --configfile config/config.yaml
+#
+# then submit via:
+#   sbatch scripts/submit_pipeline.sl
+
+import pandas as pd
+from pathlib import Path
+
+configfile: "config/config.yaml"
+
+# load sample sheet and pull out sample IDs
+# drop=False keeps sample_id as both index and column which we need later
+samples = pd.read_csv(config["sample_sheet"]).set_index("sample_id", drop=False)
+SAMPLES = samples.index.tolist()
+
+def get_r1(wildcards):
+    return samples.loc[wildcards.sample, "r1"]
+
+def get_r2(wildcards):
+    return samples.loc[wildcards.sample, "r2"]
+
+# rules split into separate files just to keep things manageable
+include: "rules/align.smk"
+include: "rules/count.smk"
+
+# rule all just defines what the final outputs should be
+# snakemake works backwards from here to figure out what needs to run
+rule all:
+    input:
+        # QC reports - want these for both raw and trimmed
+        "results/qc/multiqc_raw/multiqc_report.html",
+        "results/qc/multiqc_trimmed/multiqc_report.html",
+        "results/qc/multiqc_alignment/multiqc_report.html",
+
+        # single merged count matrix across all 48 samples
+        "results/counts/all_samples_counts.txt",
+
+        # DESeq2 - one results table per contrast
+        expand(
+            "results/deseq2/{contrast}/results_table.csv",
+            contrast=[
+                "cold_vs_control",
+                "heat_vs_control",
+                "heat_vs_cold",
+                "HD_vs_LD_control",  # diversity effect at each temp
+                "HD_vs_LD_cold",
+                "HD_vs_LD_heat",
+            ]
+        ),
+
+        # GO enrichment runs separately for each contrast
+        expand(
+            "results/go_enrichment/{contrast}/go_results.csv",
+            contrast=[
+                "cold_vs_control",
+                "heat_vs_control",
+                "heat_vs_cold",
+                "HD_vs_LD_control",
+                "HD_vs_LD_cold",
+                "HD_vs_LD_heat",
+            ]
+        ),
+
+        # WGCNA outputs
+        "results/wgcna/module_trait_correlations.csv",
+        "results/wgcna/module_gene_assignments.csv",
