@@ -79,7 +79,7 @@ if (is.null(results_all) || nrow(results_all) == 0) {
   quit(save = "no")
 }
 
-write.csv(results_all, file.path(opt$outdir, "go_results.csv"), row.names = FALSE)
+write.csv(results_all, file.path(opt$outdir, "go_results.csv"), row.names = FALSE) #output the results to a csv file
 
 # bar plot of top 20 BP terms - just biological process for now, MF/CC are in the CSV
 bp_sig <- subset(results_all, ontology == "BP" & fisher_p < opt$go_fdr)
