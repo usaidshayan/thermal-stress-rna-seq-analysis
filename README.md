@@ -118,4 +118,3 @@ DESeq2 model: `~ line + temperature + diversity:temperature`
 - `HD_vs_LD_control` — baseline diversity effect
 - `HD_vs_LD_cold` — diversity × cold stress interaction
 - `HD_vs_LD_heat` — diversity × heat stress interaction
-
