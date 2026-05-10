@@ -89,7 +89,7 @@ rule wgcna:
         merge_cut_height = config["wgcna"]["merge_cut_height"],
     threads: 8
     resources:
-        mem_mb   = 64000,   # WGCNA can use a lot of RAM with large gene sets
+        mem_mb   = 64000,   # well, WGCNA can use a lot of RAM with large gene sets
         runtime  = 240,
         partition = "large",
     shell:
