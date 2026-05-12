@@ -14,12 +14,12 @@ rule fastqc_raw:
         "logs/fastqc_raw/{sample}.log"
     threads: 2
     resources:
-        mem_mb   = 4000,
+        mem_mb   = 4000, # i've found higher memory usage to not benefit runtime
         runtime  = 30,
         partition = "large",
     shell:
         """
-        module load FastQC/0.11.9
+        module load FastQC/0.11.9 # you may want to double check the version here, has a tendancy of breaking
         fastqc --threads {threads} --outdir results/qc/fastqc_raw/ \
             {input.r1} {input.r2} 2> {log}
         # fastqc names outputs after the input file, not the wildcard sample name
