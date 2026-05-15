@@ -15,7 +15,7 @@ default-resources:
   slurm_account: "YOUR_PROJECT_CODE"    # <-- replace with your NeSI project code
   slurm_partition: "large"
   runtime: 120                            # minutes | i've had issues with this requiring to be updated on individual scripts, otherwise timing out in 3 minutes
-  mem_mb: 8000
+  mem_mb: 16000
   cpus_per_task: 2
 
 # Requeue failed jobs once (handles transient node failures on NeSI)
